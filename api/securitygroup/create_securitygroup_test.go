@@ -17,8 +17,9 @@ func createSetup() {
 	dynamicSetList := []DynamicSet{*newDynamicSet1}
 
 	newDynamicMemberDefinition1 := NewDynamicMemberDefinition(dynamicSetList)
+	newMemberDefinition1 := NewMemberDefinition("ipset-1")
 
-	createSecurityGroupAPI = NewCreate("globalroot-0", "OVP_sg_test", newDynamicMemberDefinition1)
+	createSecurityGroupAPI = NewCreate("globalroot-0", "OVP_sg_test", newDynamicMemberDefinition1, newMemberDefinition1)
 }
 
 func TestCreateMethod(t *testing.T) {
@@ -33,7 +34,7 @@ func TestCreateEndpoint(t *testing.T) {
 
 func TestCreateMarshalling(t *testing.T) {
 	createSetup()
-	expectedXML := "<securitygroup><name>OVP_sg_test</name><dynamicMemberDefinition><dynamicSet><operator>OR</operator><dynamicCriteria><operator>OR</operator><key>VM.SECURITY_TAG</key><criteria>contains</criteria><value>ovp_test_app4</value></dynamicCriteria></dynamicSet></dynamicMemberDefinition></securitygroup>"
+	expectedXML := "<securitygroup><name>OVP_sg_test</name><dynamicMemberDefinition><dynamicSet><operator>OR</operator><dynamicCriteria><operator>OR</operator><key>VM.SECURITY_TAG</key><criteria>contains</criteria><value>ovp_test_app4</value></dynamicCriteria></dynamicSet></dynamicMemberDefinition><member><objectId>ipset-1</objectId></member></securitygroup>"
 
 	xmlBytes, err := xml.Marshal(createSecurityGroupAPI.RequestObject())
 

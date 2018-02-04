@@ -18,6 +18,7 @@ type SecurityGroup struct {
 	Name                    string                   `xml:"name"`
 	InheritanceAllowed      bool                     `xml:"inheritanceAllowed,omitempty"`
 	DynamicMemberDefinition *DynamicMemberDefinition `xml:"dynamicMemberDefinition,omitempty"`
+	MemberDefinition        *MemberDefinition        `xml:"member,omitempty"`
 }
 
 // DynamicMemberDefinition - <dynamicMemberDefinition> element of <securitygroup>
@@ -38,4 +39,9 @@ type DynamicCriteria struct {
 	Criteria string `xml:"criteria"`
 	Value    string `xml:"value"`
 	IsValid  bool   `xml:"isValid,omitempty"`
+}
+
+// MemberDefinition - <memberDefinition> element of <securitygroup>
+type MemberDefinition struct {
+	ObjectID string `xml:"objectId,omitempty"`
 }

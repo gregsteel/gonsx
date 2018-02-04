@@ -11,12 +11,17 @@ type CreateSecurityGroupAPI struct {
 }
 
 // NewCreate returns a new object of CreateSecurityGroupAPI.
-func NewCreate(scopeID, securityGroupName string, dynamicMemberDefinition *DynamicMemberDefinition) *CreateSecurityGroupAPI {
+func NewCreate(scopeID, securityGroupName string, dynamicMemberDefinition *DynamicMemberDefinition, memberDefinition *MemberDefinition) *CreateSecurityGroupAPI {
 	this := new(CreateSecurityGroupAPI)
 	requestPayload := new(SecurityGroup)
 	requestPayload.Name = securityGroupName
 
-	requestPayload.DynamicMemberDefinition = dynamicMemberDefinition
+	if dynamicMemberDefinition.DynamicSet != nil {
+		requestPayload.DynamicMemberDefinition = dynamicMemberDefinition
+	}
+	if memberDefinition.ObjectID != "" {
+		requestPayload.MemberDefinition = memberDefinition
+	}
 	this.BaseAPI = api.NewBaseAPI(http.MethodPost, "/api/2.0/services/securitygroup/bulk/"+scopeID, requestPayload, new(string))
 	return this
 }
