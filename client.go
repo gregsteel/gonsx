@@ -11,6 +11,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"sync"
 )
 
 // NewNSXClient  Creates a new nsxclient object.
@@ -21,6 +22,7 @@ func NewNSXClient(url string, user string, password string, ignoreSSL bool, debu
 	nsxClient.Password = password
 	nsxClient.IgnoreSSL = ignoreSSL
 	nsxClient.debug = debug
+	nsxClient.mutex = &sync.Mutex{}
 	return nsxClient
 }
 
@@ -31,6 +33,17 @@ type NSXClient struct {
 	Password  string
 	IgnoreSSL bool
 	debug     bool
+	mutex     *sync.Mutex
+}
+
+// Lock mutex, used to handle optimistic locking problems in NSX API
+func (nsxClient *NSXClient) LockMutex() {
+	nsxClient.mutex.Lock()
+}
+
+// Unlock mutex, used to handle optimistic locking problems in NSX API
+func (nsxClient *NSXClient) UnlockMutex() {
+	nsxClient.mutex.Unlock()
 }
 
 // Do - makes the API call.
