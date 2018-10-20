@@ -7,6 +7,8 @@ type NetworkScopeList struct {
 
 // NetworkScope object within NetworkScopeList.
 type NetworkScope struct {
-	ObjectID string `xml:"objectId"`
-	Name     string `xml:"name"`
+	ObjectID             string `xml:"objectId"`
+	Name                 string `xml:"name"`
+	Description          string `xml:"description"`
+	ControlPlaneMode     string `xml:"controlPlaneMode"`
 }
