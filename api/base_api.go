@@ -8,13 +8,14 @@ type BaseAPI struct {
 	responseObject interface{}
 
 	statusCode  int
+	location    string
 	rawResponse []byte
 	err         error
 }
 
 // NewBaseAPI - Returns a new object of the BaseAPI.
 func NewBaseAPI(method string, endpoint string, requestObject interface{}, responseObject interface{}) *BaseAPI {
-	return &BaseAPI{method, endpoint, requestObject, responseObject, 0, nil, nil}
+	return &BaseAPI{method, endpoint, requestObject, responseObject, 0, "", nil, nil}
 }
 
 // RequestObject - Returns the request object of the BaseAPI
@@ -42,6 +43,11 @@ func (b *BaseAPI) StatusCode() int {
 	return b.statusCode
 }
 
+// Location - Returns the location of the api.
+func (b *BaseAPI) Location() string {
+	return b.location
+}
+
 // RawResponse - Returns the rawResponse object as byte type.
 func (b *BaseAPI) RawResponse() []byte {
 	return b.rawResponse
@@ -55,6 +61,11 @@ func (b *BaseAPI) Error() error {
 // SetStatusCode - Sets the statusCode from api object.
 func (b *BaseAPI) SetStatusCode(statusCode int) {
 	b.statusCode = statusCode
+}
+
+// SetStatusCode - Sets the location from api object.
+func (b *BaseAPI) SetLocation(location string) {
+	b.location = location
 }
 
 // SetRawResponse - Sets the rawResponse on api object.

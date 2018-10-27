@@ -7,10 +7,12 @@ type NSXApi interface {
 	RequestObject() interface{}
 	ResponseObject() interface{}
 	StatusCode() int
+	Location() string
 	RawResponse() []byte
 	Error() error
 
 	SetResponseObject(interface{})
 	SetStatusCode(int)
+	SetLocation(string)
 	SetRawResponse([]byte)
 }

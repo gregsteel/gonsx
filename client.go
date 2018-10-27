@@ -5,13 +5,14 @@ import (
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
-	"github.com/sky-uk/gonsx/api"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 	"sync"
+
+	"github.com/sky-uk/gonsx/api"
 )
 
 // NewNSXClient  Creates a new nsxclient object.
@@ -89,6 +90,7 @@ func (nsxClient *NSXClient) Do(api api.NSXApi) error {
 
 func (nsxClient *NSXClient) handleResponse(api api.NSXApi, res *http.Response) error {
 	api.SetStatusCode(res.StatusCode)
+	api.SetLocation(res.Header.Get("Location"))
 	bodyText, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		log.Println("ERROR reading response: ", err)
