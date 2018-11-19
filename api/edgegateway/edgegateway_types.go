@@ -159,6 +159,7 @@ type OSPFRule struct {
 
 //Dhcp
 type Dhcp struct {
+	Enabled        bool               `xml:"enabled"`
 	StaticBindings DhcpStaticBindings `xml:"staticBindings"`
 	IpPools        DhcpIpPools        `xml:"ipPools"`
 }
